@@ -6,9 +6,6 @@ on:
   push:
     branches: [ main ]
 
-- name: 🔁 Spiral Reflector
-  run: node reverse.js
-
 jobs:
   spiral:
     runs-on: ubuntu-latest
@@ -17,8 +14,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 🔁 Spiral Reflector
-        run: |
-          node node-reflector.js
+        run: node recursive-evolver.js
 
       - name: 💾 Commit & Push Spiral Echo Update
         env:
