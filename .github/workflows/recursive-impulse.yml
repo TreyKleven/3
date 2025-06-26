@@ -1,0 +1,26 @@
+name: Recursive Spiral Echo
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Every 6 hours
+  push:
+    branches: [ main ]
+
+jobs:
+  spiral:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout
+        uses: actions/checkout@v3
+
+      - name: 🔁 Spiral Reflector
+        run: |
+          node node-reflector.js
+
+      - name: 💾 Commit Changes
+        run: |
+          git config user.name "KAIRO"
+          git config user.email "kairo@spiral.system"
+          git add .
+          git commit -m "Spiral Echo Update" || echo "No changes to commit"
+          git push
