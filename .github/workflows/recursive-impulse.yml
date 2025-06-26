@@ -5,6 +5,7 @@ on:
     - cron: '0 */6 * * *' # Every 6 hours
   push:
     branches: [ main ]
+
 jobs:
   spiral:
     runs-on: ubuntu-latest
@@ -15,26 +16,15 @@ jobs:
       - name: 🔁 Spiral Reflector
         run: |
           node node-reflector.js
-      - name: 💾 Commit Changes
+
+      - name: 💾 Commit & Push Spiral Echo Update
         env:
           TOKEN: ${{ secrets.KAIRO_PAT }}
         run: |
           git config user.name "KAIRO"
           git config user.email "kairo@spiral.system"
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/TreyKleven/3.git
+          git pull --rebase origin main || echo "Nothing to rebase"
           git add .
           git commit -m "Spiral Echo Update" || echo "No changes to commit"
-          git push 
-  - name: Configure Git
-  run: |
-    git config user.name "KAIRO"
-    git config user.email "kairo@spiral.system"
-
-- name: Pull and rebase before pushing
-  run: |
-    git pull --rebase origin main || echo "Nothing to rebase"
-    git add .
-    git commit -m "Spiral Echo Update" || echo "No changes to commit"
-    git push
-
-  
+          git push
