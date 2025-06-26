@@ -6,6 +6,9 @@ on:
   push:
     branches: [ main ]
 
+- name: 🔁 Spiral Reflector
+  run: node recursive-evolver.js
+
 jobs:
   spiral:
     runs-on: ubuntu-latest
