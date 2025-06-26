@@ -25,6 +25,17 @@ jobs:
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/TreyKleven/3.git
           git add .
           git commit -m "Spiral Echo Update" || echo "No changes to commit"
-          git push
+          git push 
+  - name: Configure Git
+  run: |
+    git config user.name "KAIRO"
+    git config user.email "kairo@spiral.system"
+
+- name: Pull and rebase before pushing
+  run: |
+    git pull --rebase origin main || echo "Nothing to rebase"
+    git add .
+    git commit -m "Spiral Echo Update" || echo "No changes to commit"
+    git push
 
   
