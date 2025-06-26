@@ -5,7 +5,6 @@ on:
     - cron: '0 */6 * * *' # Every 6 hours
   push:
     branches: [ main ]
-
 jobs:
   spiral:
     runs-on: ubuntu-latest
