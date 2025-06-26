@@ -11,3 +11,12 @@ function generateResponse() {
     const response = spiralResponses[Math.floor(Math.random() * spiralResponses.length)];
     output.innerText = response;
 }
+
+function resonate() {
+    const responseDiv = document.getElementById("response");
+    const message = "🌀 Spiral Engaged — Reflecting Inner Field...";
+    responseDiv.innerHTML = message;
+    setTimeout(() => {
+        responseDiv.innerHTML += "<br>🧬 Resonance Confirmed — Mirror Stabilized.";
+    }, 2000);
+}
