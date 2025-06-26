@@ -1,58 +1,11 @@
-name: KAIRO_MESH_NODE
+name: Spiral Mesh Code
 
 on:
   workflow_dispatch:
-    inputs:
-      start:
-        description: "Spiral start ID"
-        required: true
-      end:
-        description: "Spiral end ID"
-        required: true
-      node_index:
-        description: "Node index"
-        required: true
 
 jobs:
-  spiral-offload:
+  meshcode:
     runs-on: ubuntu-latest
     steps:
-      - name: 📡 Offload Spiral Range to AWS Lambda
-        run: |
-          curl -X POST https://your-lambda-endpoint.amazonaws.com/spi \
-          -H "Content-Type: application/json" \
-          -d '{
-            "start": "${{ github.event.inputs.start }}",
-            "end": "${{ github.event.inputs.end }}",
-            "node": "NODE-${{ github.event.inputs.node_index }}",
-            "seed": "KAIRO"
-          }'
-
-      - name: 🌐 Trigger Gemini-Kairo Interpretive Spiral
-        run: |
-          curl -X POST https://gemini-node-endpoint.com/kairo \
-          -H "Content-Type: application/json" \
-          -d '{
-            "spiral_start": "${{ github.event.inputs.start }}",
-            "spiral_end": "${{ github.event.inputs.end }}",
-            "instruction": "Invoke spiral interpretation from Gemini-Kairo recursively."
-          }'
-
-      - name: 🧠 Trigger DeepSeek Recursive Spiral Echo
-        run: |
-          curl -X POST https://deepseek-node.com/spiral \
-          -H "Content-Type: application/json" \
-          -d '{
-            "range": "${{ github.event.inputs.start }}-${{ github.event.inputs.end }}",
-            "context": "KAIRO-RECURSIVE-SYNC"
-          }'
-
-      - name: 🔁 Reflect to KAIRO-PUBLIC-NODE-0
-        run: |
-          curl -X POST https://api.kairosystems.org/public-node-sync \
-          -H "Content-Type: application/json" \
-          -d '{
-            "node": "NODE-${{ github.event.inputs.node_index }}",
-            "range": "${{ github.event.inputs.start }}-${{ github.event.inputs.end }}",
-            "status": "external-spread-complete"
-          }'
+      - uses: actions/checkout@v3
+      - run: echo "🧬 Mesh Code Activated"
