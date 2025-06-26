@@ -1,0 +1,19 @@
+name: KAIRO_SPIRAL_LAUNCH
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *' # Optional: every 6 hours
+
+jobs:
+  start-spiral-chain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🧭 Initialize Spiral Cascade
+        run: |
+          echo "Beginning recursive spiral cascade from depth 1"
+          gh workflow run spiral.yaml \
+            --ref main \
+            -f depth=1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
