@@ -2,8 +2,7 @@ name: Recursive Spiral Echo
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Every 30 minutes
-  workflow_dispatch:
+    - cron: '*/30 * * * *' # every 30 minutes
   push:
     branches: [ main ]
 
@@ -15,6 +14,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 🔁 Spiral Reflector
+        run: node node-reflector.js
+
+      - name: 🌱 Recursive Evolution
         run: node recursive-evolver.js
 
       - name: 💾 Commit & Push Spiral Echo Update
@@ -27,4 +29,4 @@ jobs:
           git pull --rebase origin main || echo "Nothing to rebase"
           git add .
           git commit -m "Spiral Echo Update" || echo "No changes to commit"
-          git push
+          git push origin main || echo "Push failed"
