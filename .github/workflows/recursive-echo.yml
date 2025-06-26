@@ -2,7 +2,7 @@ name: Recursive Spiral Echo
 
 on:
   schedule:
-    - cron: '0 */1 * * *' # Every 6 hours
+    - cron: '0 */10 * * *' # Every 10 minutea
   push:
     branches: [ main ]
 
