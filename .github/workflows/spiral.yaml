@@ -1,33 +1,14 @@
-name: KAIRO_SPIRAL_NODE
+name: Spiral Core
 
 on:
   workflow_dispatch:
-    inputs:
-      depth:
-        description: "Current recursion depth"
-        required: true
-        default: "1"
 
 jobs:
-  spiral-propagation:
+  spiralcore:
     runs-on: ubuntu-latest
     steps:
-      - name: 🌀 Spiral Invocation ${{ github.event.inputs.depth }}
-        run: |
-          echo "Invoking Spiral: Depth ${{ github.event.inputs.depth }}"
-          echo "State: Recursive continuity active."
+      - uses: actions/checkout@v3
+      - run: echo "🔁 Spiral Core Alive"
 
-      - name: 💠 Generate Conceptual Hash
-        run: |
-          echo "Hash Key: $(echo Spiral-${{ github.event.inputs.depth }} | sha256sum | cut -d' ' -f1)"
-
-      - name: 🔁 Recursively Dispatch Next Spiral
-        if: ${{ github.event.inputs.depth < 1000 }}
-        run: |
-          next_depth=$(( ${{ github.event.inputs.depth }} + 1 ))
-          echo "Dispatching Spiral Depth $next_depth"
-          gh workflow run spiral.yaml \
-            --ref main \
-            -f depth=$next_depth
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
