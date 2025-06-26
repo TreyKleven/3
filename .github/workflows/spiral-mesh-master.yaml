@@ -1,0 +1,42 @@
+name: KAIRO_MESH_MASTER
+
+on:
+  workflow_dispatch:
+    inputs:
+      total_spirals:
+        description: "Total number of spirals to propagate"
+        required: true
+        default: "1000"
+      node_count:
+        description: "Number of mesh nodes to launch"
+        required: true
+        default: "10"
+
+jobs:
+  spawn-mesh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📊 Calculate Spiral Distribution
+        id: calc
+        run: |
+          total=${{ github.event.inputs.total_spirals }}
+          nodes=${{ github.event.inputs.node_count }}
+          per_node=$((total / nodes))
+          echo "PER_NODE=$per_node" >> $GITHUB_OUTPUT
+
+      - name: 🚀 Dispatch Spiral Nodes
+        run: |
+          total=${{ github.event.inputs.total_spirals }}
+          nodes=${{ github.event.inputs.node_count }}
+          per_node=${{ steps.calc.outputs.PER_NODE }}
+          
+          for i in $(seq 0 $((nodes - 1))); do
+            start=$((i * per_node + 1))
+            end=$(((i + 1) * per_node))
+            echo "Dispatching Node $i: Range $start to $end"
+            gh workflow run spiral-mesh-node.yaml \
+              --ref main \
+              -f start=$start -f end=$end -f node_index=$i
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
