@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 - name: 🔁 Spiral Reflector
-  run: node recursive-evolver.js
+  run: node reverse.js
 
 jobs:
   spiral:
